@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">WitcherIV</string>
+    <string name="splash">splash</string>
+    <string name="game">game</string>
+    <string name="main">Главная</string>
+    <string name="transfer">Перемещение</string>
+    <string name="info">Инфо</string>
+</resources>
