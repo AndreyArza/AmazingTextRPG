@@ -1,12 +1,14 @@
 pluginManagement {
     repositories {
-        google()
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
         mavenCentral()
         gradlePluginPortal()
-    }
-    plugins {
-        kotlin("jvm") version "1.9.21"
-        kotlin("plugin.serialization") version "1.9.21"
     }
 }
 dependencyResolutionManagement {
@@ -17,5 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "WitcherIV"
+rootProject.name = "DemoTextRPG"
 include(":app")
+ 
