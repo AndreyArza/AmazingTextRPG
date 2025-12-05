@@ -1,6 +1,6 @@
 package ru.andrey.demotextrpg.network.api.interfaces
 
-import ru.andrey.demotextrpg.network.api.implementation.CountData
+import ru.andrey.demotextrpg.network.model.request.CountData
 import ru.andrey.demotextrpg.network.model.data.ActionData
 import ru.andrey.demotextrpg.network.model.data.DirectionData
 import ru.andrey.demotextrpg.network.model.data.GameData
@@ -9,7 +9,7 @@ import ru.andrey.demotextrpg.network.model.data.ModelData
 import ru.andrey.demotextrpg.network.model.data.StatData
 import ru.andrey.demotextrpg.network.model.data.StatValueData
 import ru.andrey.demotextrpg.network.model.data.StateData
-import ru.andrey.demotextrpg.network.model.response.ItemType
+import ru.andrey.demotextrpg.network.model.request.ItemType
 
 interface NetworkApi {
     suspend fun getGameAllGames(): Result<List<GameData>>
@@ -20,5 +20,5 @@ interface NetworkApi {
     suspend fun getDirections(gameId: String, limit: Int, offset: Int): Result<List<DirectionData>>
     suspend fun getStats(gameId: String, limit: Int, offset: Int): Result<List<StatData>>
     suspend fun getStatsValues(gameId: String, limit: Int, offset: Int): Result<List<StatValueData>>
-    suspend fun getInitModel(gameId: String, limit: Int, offset: Int): Result<ModelData>
+    suspend fun getInitModel(gameId: String): Result<ModelData>
 }

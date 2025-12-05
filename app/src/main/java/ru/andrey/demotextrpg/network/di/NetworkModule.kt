@@ -1,14 +1,21 @@
 package ru.andrey.demotextrpg.network.di
 
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import ru.andrey.demotextrpg.network.api.implementation.NetworkApiImpl
 import ru.andrey.demotextrpg.network.api.interfaces.NetworkApi
+import ru.andrey.demotextrpg.network.source.implementation.NetworkSourceImpl
+import ru.andrey.demotextrpg.network.source.interfaces.NetworkSource
 import javax.inject.Singleton
 
 @Module
-class NetworkModule {
+interface NetworkModule {
     @Singleton
-    @Provides
-    fun provideNetworkApi(): NetworkApi = NetworkApiImpl()
+    @Binds
+    fun bindNetworkApi(impl: NetworkApiImpl): NetworkApi
+
+    @Singleton
+    @Binds
+    fun bindNetworkSource(impl: NetworkSourceImpl): NetworkSource
 }

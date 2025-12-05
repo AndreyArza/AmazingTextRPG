@@ -1,5 +1,6 @@
 package ru.andrey.demotextrpg.network.api.implementation
 
+import jakarta.inject.Inject
 import kotlinx.serialization.json.Json
 import ru.andrey.demotextrpg.network.api.interfaces.NetworkApi
 import ru.andrey.demotextrpg.network.mock.actions
@@ -18,9 +19,10 @@ import ru.andrey.demotextrpg.network.model.data.ModelData
 import ru.andrey.demotextrpg.network.model.data.StatData
 import ru.andrey.demotextrpg.network.model.data.StatValueData
 import ru.andrey.demotextrpg.network.model.data.StateData
-import ru.andrey.demotextrpg.network.model.response.ItemType
+import ru.andrey.demotextrpg.network.model.request.CountData
+import ru.andrey.demotextrpg.network.model.request.ItemType
 
-class NetworkApiImpl() : NetworkApi {
+class NetworkApiImpl @Inject constructor() : NetworkApi {
     private val json = Json
 
     override suspend fun getGameAllGames(): Result<List<GameData>> {
@@ -130,9 +132,7 @@ class NetworkApiImpl() : NetworkApi {
     }
 
     override suspend fun getInitModel(
-        gameId: String,
-        limit: Int,
-        offset: Int
+        gameId: String
     ): Result<ModelData> {
         val model = json.decodeFromString<ModelData>(model)
         return Result.success(model)

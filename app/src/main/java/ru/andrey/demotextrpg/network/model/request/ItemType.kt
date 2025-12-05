@@ -1,4 +1,4 @@
-package ru.andrey.demotextrpg.network.model.response
+package ru.andrey.demotextrpg.network.model.request
 
 enum class ItemType {
     GAME,

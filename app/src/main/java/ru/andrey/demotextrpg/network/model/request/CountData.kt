@@ -1,4 +1,4 @@
-package ru.andrey.demotextrpg.network.api.implementation
+package ru.andrey.demotextrpg.network.model.request
 
 import kotlinx.serialization.Serializable
 
