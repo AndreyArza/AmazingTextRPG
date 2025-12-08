@@ -10,11 +10,11 @@ const val ACTION_TABLE = "action_table"
 
 @Entity(
     tableName = ACTION_TABLE,
-    indices = [Index(value = ["parentStateId"], unique = false)],
+    indices = [Index(value = ["stateId"], unique = false)],
     foreignKeys = [ForeignKey(
         entity = StateEntity::class,
         parentColumns = ["id"],
-        childColumns = ["parentStateId"],
+        childColumns = ["stateId"],
         onDelete = ForeignKey.CASCADE
     )]
 
@@ -22,6 +22,6 @@ const val ACTION_TABLE = "action_table"
 data class ActionEntity(
     @PrimaryKey
     val id: String,
-    val parentStateId: String,
+    val stateId: String,
     val description: String,
 )

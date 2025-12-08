@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
         (applicationContext as App).appComponent.inject(this)
 
         lifecycleScope.launch {
-            source.getActions("", 1).collect { res ->
+            source.getDirections("", 1).collect { res ->
                 val a = res.getOrNull()!!
                 Log.d(
                     "AAAAAAAAAAAAAAAAAAAAAAAA",
