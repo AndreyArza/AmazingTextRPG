@@ -1,6 +1,6 @@
 package ru.andrey.demotextrpg.data.repository.mapper.interfaces
 
-import ru.andrey.demotextrpg.network.model.data.GameData1
 import ru.andrey.demotextrpg.data.repository.model.Game
+import ru.andrey.demotextrpg.network.model.data.GameData
 
-interface GameMapper: Mapper<GameData1, Unit, Game>
+interface GameMapper : Mapper<GameData, Unit, Game>

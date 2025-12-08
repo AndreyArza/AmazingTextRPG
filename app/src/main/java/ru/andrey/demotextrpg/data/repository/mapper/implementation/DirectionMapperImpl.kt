@@ -1,9 +1,9 @@
 package ru.andrey.demotextrpg.data.repository.mapper.implementation
 
-import ru.andrey.demotextrpg.network.model.data.DirectionData
 import ru.andrey.demotextrpg.data.repository.mapper.interfaces.DirectionMapper
 import ru.andrey.demotextrpg.data.repository.mapper.interfaces.StatsCheckMapper
 import ru.andrey.demotextrpg.data.repository.model.Direction
+import ru.andrey.demotextrpg.network.model.data.DirectionData
 
 class DirectionMapperImpl(
     val statsCheckMapper: StatsCheckMapper = StatsCheckMapperImpl()

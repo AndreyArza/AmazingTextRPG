@@ -1,11 +1,11 @@
 package ru.andrey.demotextrpg.data.repository.mapper.implementation
 
-import ru.andrey.demotextrpg.network.model.data.ActionData
-import ru.andrey.demotextrpg.network.model.data.ModelData
 import ru.andrey.demotextrpg.data.repository.mapper.interfaces.ActionMapper
 import ru.andrey.demotextrpg.data.repository.mapper.interfaces.SideEffectMapper
 import ru.andrey.demotextrpg.data.repository.mapper.interfaces.StatsCheckMapper
 import ru.andrey.demotextrpg.data.repository.model.Action
+import ru.andrey.demotextrpg.network.model.data.ActionData
+import ru.andrey.demotextrpg.network.model.data.ModelData
 
 class ActionMapperImpl(
     val sideEffectMapper: SideEffectMapper = SideEffectMapperImpl(),
@@ -26,9 +26,12 @@ class ActionMapperImpl(
             },
             successCheck = { model ->
                 val success =
-                    statsCheckMapper.map(data.successCheck?.requiredStats?: listOf(), model.stats)
+                    statsCheckMapper.map(data.successCheck?.requiredStats ?: listOf(), model.stats)
                 val unsuccessful =
-                    statsCheckMapper.map(data.successCheck?.unsuccessfulStats?: listOf(), model.stats)
+                    statsCheckMapper.map(
+                        data.successCheck?.unsuccessfulStats ?: listOf(),
+                        model.stats
+                    )
                 success && !unsuccessful
             },
         )

@@ -1,8 +1,8 @@
 package ru.andrey.demotextrpg.data.repository.mapper.implementation
 
-import ru.andrey.demotextrpg.network.model.data.StatData
 import ru.andrey.demotextrpg.data.repository.mapper.interfaces.StatMapper
 import ru.andrey.demotextrpg.data.repository.model.Stat
+import ru.andrey.demotextrpg.network.model.data.StatData
 
 class StatMapperImpl : StatMapper {
     override fun map(

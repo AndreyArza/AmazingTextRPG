@@ -1,33 +1,36 @@
 package ru.andrey.demotextrpg.data.repository.mapper.implementation
 
+import ru.andrey.demotextrpg.data.repository.mapper.interfaces.SideEffectMapper
+import ru.andrey.demotextrpg.data.repository.model.Model
+import ru.andrey.demotextrpg.data.repository.model.Stat
+import ru.andrey.demotextrpg.data.repository.model.StatValue
 import ru.andrey.demotextrpg.network.model.data.SideEffectData
 import ru.andrey.demotextrpg.network.model.data.StatEventTypeData
-import ru.andrey.demotextrpg.data.repository.mapper.interfaces.SideEffectMapper
-import ru.andrey.demotextrpg.data.repository.model.Game
-import ru.andrey.demotextrpg.data.repository.model.Model
 
 class SideEffectMapperImpl : SideEffectMapper {
     override fun map(
         data: SideEffectData,
         additionalInfo: Unit?
-    ): (Game, Model) -> Model {
-        return { game, model ->
+    ): (Pair<List<Stat>, List<StatValue>>, Model) -> Model {
+        return { pair, model ->
             val newStateId = data.newStateId
             val newLocationId = data.newLocationId
             val newStats = model.stats.toMutableMap()
+            val allStats = pair.first
+            val allStatsValues = pair.second
 
             data.statEvents.forEach { event ->
                 when (event.type) {
                     StatEventTypeData.ADD, StatEventTypeData.UPDATE -> {
-                        val stat = game.allStats[event.statId]
-                        val statValue = game.allStatsValues[event.statValueId]
+                        val stat = allStats.firstOrNull { it.id == event.statId }
+                        val statValue = allStatsValues.firstOrNull { it.id == event.statValueId }
                         if (stat != null && statValue != null) {
                             newStats[stat] = statValue
                         }
                     }
 
                     StatEventTypeData.REMOVE -> {
-                        newStats.remove(game.allStats[event.statId])
+                        newStats.remove(allStats.firstOrNull { it.id == event.statId })
                     }
                 }
             }

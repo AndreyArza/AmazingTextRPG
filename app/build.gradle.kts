@@ -59,6 +59,8 @@ dependencies {
     implementation(libs.kotlin.serialization)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.dagger)
+    implementation(libs.room.runtime)
+    annotationProcessor(libs.room.compiler)
     kapt(libs.dagger.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

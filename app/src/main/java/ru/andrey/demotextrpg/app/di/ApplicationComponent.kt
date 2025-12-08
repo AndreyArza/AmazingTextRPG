@@ -1,12 +1,27 @@
 package ru.andrey.demotextrpg.app.di
 
+import android.app.Application
+import dagger.BindsInstance
 import dagger.Component
-import jakarta.inject.Singleton
-import ru.andrey.demotextrpg.data.di.DataModule
+import ru.andrey.demotextrpg.network.di.NetworkModule
 import ru.andrey.demotextrpg.ui.activity.MainActivity
+import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [DataModule::class])
+@Component(
+    modules = [
+        AppModule::class,
+        NetworkModule::class,
+    ]
+)
 interface ApplicationComponent {
-//    fun inject(activity: MainActivity)
+    @Component.Builder
+    interface Builder {
+        @BindsInstance
+        fun application(application: Application): Builder
+
+        fun build(): ApplicationComponent
+    }
+
+    fun inject(activity: MainActivity)
 }

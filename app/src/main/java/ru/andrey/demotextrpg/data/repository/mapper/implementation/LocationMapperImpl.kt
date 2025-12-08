@@ -1,9 +1,9 @@
 package ru.andrey.demotextrpg.data.repository.mapper.implementation
 
-import ru.andrey.demotextrpg.network.model.data.LocationData
 import ru.andrey.demotextrpg.data.repository.mapper.interfaces.LocationMapper
 import ru.andrey.demotextrpg.data.repository.model.Direction
 import ru.andrey.demotextrpg.data.repository.model.Location
+import ru.andrey.demotextrpg.network.model.data.LocationData
 
 class LocationMapperImpl : LocationMapper {
     override fun map(

@@ -52,7 +52,7 @@ fun MainGame(
                 modifier = Modifier.padding(12.dp),
                 onClick = { viewModel.process(action) },
                 colors = ButtonDefaults.buttonColors(containerColor = Color.DarkGray)
-            ){
+            ) {
                 Text(
                     text = action.description,
                     modifier = Modifier
@@ -63,5 +63,5 @@ fun MainGame(
                 )
             }
         }
-        }
     }
+}
