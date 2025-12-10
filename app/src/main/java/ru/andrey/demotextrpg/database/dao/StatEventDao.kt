@@ -11,17 +11,17 @@ import ru.andrey.demotextrpg.database.entities.StatEventEntity
 @Dao
 interface StatEventDao {
     @Query("SELECT * FROM $STAT_EVENT_TABLE")
-    fun getAll(): List<StatEventEntity>
+    suspend fun getAll(): List<StatEventEntity>
 
     @Query("SELECT * FROM $STAT_EVENT_TABLE WHERE id IN (:ids)")
-    fun loadAllByIds(ids: List<String>): List<StatEventEntity>
+    suspend fun loadAllByIds(ids: List<String>): List<StatEventEntity>
 
     @Query("SELECT * FROM $STAT_EVENT_TABLE WHERE sideEffectId in (:ids)")
-    fun loadAllBySideEffectIds(ids: List<String>): List<StatEventEntity>
+    suspend fun loadAllBySideEffectIds(ids: List<String>): List<StatEventEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(entities: List<StatEventEntity>)
+    suspend fun insertAll(entities: List<StatEventEntity>)
 
     @Delete
-    fun delete(entities: List<StatEventEntity>)
+    suspend fun delete(entities: List<StatEventEntity>)
 }

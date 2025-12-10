@@ -11,11 +11,11 @@ import ru.andrey.demotextrpg.database.entities.RelationActionToStatsEntity
 @Dao
 interface RelationActionToStatsDao {
     @Query("SELECT * FROM $RELATION_ACTION_TO_STATS_TABLE WHERE actionId in (:ids)")
-    fun loadAllByActionIds(ids: List<String>): List<RelationActionToStatsEntity>
+    suspend fun loadAllByActionIds(ids: List<String>): List<RelationActionToStatsEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(entities: List<RelationActionToStatsEntity>)
+    suspend fun insertAll(entities: List<RelationActionToStatsEntity>)
 
     @Delete
-    fun delete(entities: List<RelationActionToStatsEntity>)
+    suspend fun delete(entities: List<RelationActionToStatsEntity>)
 }

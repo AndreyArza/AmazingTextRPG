@@ -11,17 +11,17 @@ import ru.andrey.demotextrpg.database.entities.StateEntity
 @Dao
 interface StateDao {
     @Query("SELECT * FROM $STATE_TABLE")
-    fun getAll(): List<StateEntity>
+    suspend fun getAll(): List<StateEntity>
 
     @Query("SELECT * FROM $STATE_TABLE WHERE id IN (:ids)")
-    fun loadAllByIds(ids: List<String>): List<StateEntity>
+    suspend fun loadAllByIds(ids: List<String>): List<StateEntity>
 
     @Query("SELECT * FROM $STATE_TABLE WHERE gameId LIKE :id")
-    fun loadAllByGameId(id: String): List<StateEntity>
+    suspend fun loadAllByGameId(id: String): List<StateEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(entities: List<StateEntity>)
+    suspend fun insertAll(entities: List<StateEntity>)
 
     @Delete
-    fun delete(entities: List<StateEntity>)
+    suspend fun delete(entities: List<StateEntity>)
 }

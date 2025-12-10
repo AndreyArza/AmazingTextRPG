@@ -13,15 +13,16 @@ const val STAT_EVENT_TABLE = "stat_event_table"
     tableName = STAT_EVENT_TABLE,
     indices = [Index(value = ["sideEffectId"], unique = false)],
     foreignKeys = [ForeignKey(
-        entity = SideEffectEntity::class,
+        entity = GameEntity::class,
         parentColumns = ["id"],
-        childColumns = ["sideEffectId"],
+        childColumns = ["gameId"],
         onDelete = ForeignKey.CASCADE
     )]
 )
 data class StatEventEntity(
     @PrimaryKey(autoGenerate = true)
     val id: String,
+    val gameId: String,
     val sideEffectId: String,
     val statId: String,
     val statValueId: String,

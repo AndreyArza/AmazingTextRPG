@@ -137,7 +137,8 @@ class NetworkApiImpl @Inject constructor() : NetworkApi {
     }
 
     override suspend fun getInitModel(
-        gameId: String
+        gameId: String,
+        gameVersion: String
     ): Result<ModelData> {
         val model = json.decodeFromString<ModelData>(model)
         return Result.success(model)

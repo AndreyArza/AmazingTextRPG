@@ -13,14 +13,14 @@ import ru.andrey.demotextrpg.database.entities.ModelEntity
 @Dao
 interface ModelDao {
     @Query("SELECT * FROM $MODEL_TABLE")
-    fun getAll(): List<ModelEntity>
+    suspend fun getAll(): List<ModelEntity>
 
     @Query("SELECT * FROM $MODEL_TABLE WHERE gameId LIKE :id")
-    fun loadByGameId(id: String): Flow<ModelEntity>
+    suspend fun loadByGameId(id: String): Flow<ModelEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(entities: List<ModelEntity>)
+    suspend fun insertAll(entities: List<ModelEntity>)
 
     @Delete
-    fun delete(entities: List<ModelEntity>)
+    suspend fun delete(entities: List<ModelEntity>)
 }

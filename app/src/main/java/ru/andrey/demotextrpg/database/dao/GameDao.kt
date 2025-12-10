@@ -11,14 +11,14 @@ import ru.andrey.demotextrpg.database.entities.GameEntity
 @Dao
 interface GameDao {
     @Query("SELECT * FROM $GAME_TABLE")
-    fun getAll(): List<GameEntity>
+    suspend fun getAll(): List<GameEntity>
 
     @Query("SELECT * FROM $GAME_TABLE WHERE id IN (:ids)")
-    fun loadAllByIds(ids: List<String>): List<GameEntity>
+    suspend fun loadAllByIds(ids: List<String>): List<GameEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(entities: List<GameEntity>)
+    suspend fun insertAll(entities: List<GameEntity>)
 
     @Delete
-    fun delete(games: List<GameEntity>)
+    suspend fun delete(games: List<GameEntity>)
 }

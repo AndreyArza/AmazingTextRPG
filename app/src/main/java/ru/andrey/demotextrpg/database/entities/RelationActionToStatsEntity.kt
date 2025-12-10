@@ -9,15 +9,15 @@ const val RELATION_ACTION_TO_STATS_TABLE = "relation_action_to_stats_table"
 
 @Entity(
     tableName = RELATION_ACTION_TO_STATS_TABLE,
-    primaryKeys = ["actionId", "statId", "valueId", "type"],
     foreignKeys = [ForeignKey(
         entity = ActionEntity::class,
         parentColumns = ["id"],
-        childColumns = ["actionId"],
+        childColumns = ["gameId"],
         onDelete = ForeignKey.CASCADE
     )]
 )
 data class RelationActionToStatsEntity(
+    val gameId: String,
     val actionId: String,
     val statId: String,
     val valueId: String,

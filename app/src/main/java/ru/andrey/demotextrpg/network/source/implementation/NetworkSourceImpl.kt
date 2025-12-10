@@ -1,12 +1,8 @@
 package ru.andrey.demotextrpg.network.source.implementation
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.channelFlow
 import ru.andrey.demotextrpg.network.api.interfaces.NetworkApi
 import ru.andrey.demotextrpg.network.model.data.ActionData
 import ru.andrey.demotextrpg.network.model.data.DirectionData
@@ -24,7 +20,6 @@ import javax.inject.Inject
 class NetworkSourceImpl @Inject constructor(
     private val api: NetworkApi
 ) : NetworkSource {
-    private val scope = CoroutineScope(Dispatchers.IO)
 
     override fun getGames(pageSize: Int): Flow<Result<PageData<GameData>>> {
         return getData(
@@ -121,12 +116,12 @@ class NetworkSourceImpl @Inject constructor(
         )
     }
 
-    override fun getInitModel(gameId: String): Flow<Result<ModelData>> {
-        val flow = MutableSharedFlow<Result<ModelData>>()
-        scope.launch {
-            flow.tryEmit(api.getInitModel(gameId))
+    override fun getInitModel(gameId: String, gameVersion: String): Flow<Result<ModelData>> {
+        return channelFlow {
+            send(
+                api.getInitModel(gameId, gameVersion)
+            )
         }
-        return flow
     }
 
 
@@ -136,36 +131,29 @@ class NetworkSourceImpl @Inject constructor(
         itemType: ItemType,
         apiCall: suspend (limit: Int, offset: Int) -> Result<List<T>>
     ): Flow<Result<PageData<T>>> {
-        val flow =
-            MutableStateFlow<Result<PageData<T>>>(
-                Result.success(
-                    PageData(
-                        emptyList(),
-                        0,
-                        Int.MAX_VALUE
-                    )
-                )
-            )
-        scope.launch {
+        val flow = channelFlow {
             try {
                 val total = api.getItemsCount(gameId, itemType).getOrThrow().count
                 var offset = 0
                 var data = apiCall.invoke(pageSize, offset)
+                val values = mutableListOf<T>()
                 while (offset < total) {
-                    flow.update { old ->
+                    delay(1000)
+                    send(
                         data.map { list ->
+                            values.addAll(list)
                             PageData(
-                                values = old.getOrThrow().values + list,
-                                loaded = offset + pageSize,
+                                values = values,
+                                loaded = offset + list.size,
                                 total = total
                             )
                         }
-                    }
+                    )
                     offset += pageSize
                     data = apiCall.invoke(pageSize, offset)
                 }
             } catch (e: Exception) {
-                flow.tryEmit(Result.failure(e))
+                send(Result.failure(e))
             }
         }
         return flow

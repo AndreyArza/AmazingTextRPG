@@ -21,5 +21,5 @@ interface NetworkSource {
     fun getDirections(gameId: String, pageSize: Int): Flow<Result<PageData<DirectionData>>>
     fun getStats(gameId: String, pageSize: Int): Flow<Result<PageData<StatData>>>
     fun getStatsValues(gameId: String, pageSize: Int): Flow<Result<PageData<StatValueData>>>
-    fun getInitModel(gameId: String): Flow<Result<ModelData>>
+    fun getInitModel(gameId: String, gameVersion: String): Flow<Result<ModelData>>
 }

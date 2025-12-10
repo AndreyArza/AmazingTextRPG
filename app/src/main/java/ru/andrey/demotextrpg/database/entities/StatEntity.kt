@@ -3,12 +3,12 @@ package ru.andrey.demotextrpg.database.entities
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
-import androidx.room.PrimaryKey
 
 const val STAT_TABLE = "stat_table"
 
 @Entity(
     tableName = STAT_TABLE,
+    primaryKeys = ["id", "gameId"],
     indices = [Index(value = ["gameId"], unique = false)],
     foreignKeys = [ForeignKey(
         entity = GameEntity::class,
@@ -18,7 +18,6 @@ const val STAT_TABLE = "stat_table"
     )]
 )
 data class StatEntity(
-    @PrimaryKey
     val id: String,
     val gameId: String,
     val name: String = "",

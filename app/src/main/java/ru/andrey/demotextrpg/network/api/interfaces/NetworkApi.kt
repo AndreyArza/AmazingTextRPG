@@ -22,5 +22,5 @@ interface NetworkApi {
     suspend fun getDirections(gameId: String, limit: Int, offset: Int): Result<List<DirectionData>>
     suspend fun getStats(gameId: String, limit: Int, offset: Int): Result<List<StatData>>
     suspend fun getStatsValues(gameId: String, limit: Int, offset: Int): Result<List<StatValueData>>
-    suspend fun getInitModel(gameId: String): Result<ModelData>
+    suspend fun getInitModel(gameId: String, gameVersion: String): Result<ModelData>
 }

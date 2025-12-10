@@ -12,15 +12,16 @@ const val SIDE_EFFECT_TABLE = "side_effect_table"
     tableName = SIDE_EFFECT_TABLE,
     indices = [Index(value = ["actionId"], unique = false)],
     foreignKeys = [ForeignKey(
-        entity = ActionEntity::class,
+        entity = GameEntity::class,
         parentColumns = ["id"],
-        childColumns = ["actionId"],
+        childColumns = ["gameId"],
         onDelete = ForeignKey.CASCADE
     )]
 )
 data class SideEffectEntity(
     @PrimaryKey(autoGenerate = true)
     val id: String,
+    val gameId: String,
     val actionId: String,
     val type: SideEffectType,
     val newStateId: String? = null,

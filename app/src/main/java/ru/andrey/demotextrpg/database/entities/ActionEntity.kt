@@ -3,25 +3,25 @@ package ru.andrey.demotextrpg.database.entities
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
-import androidx.room.PrimaryKey
 
 const val ACTION_TABLE = "action_table"
 
 
 @Entity(
     tableName = ACTION_TABLE,
+    primaryKeys = ["id", "gameId"],
     indices = [Index(value = ["stateId"], unique = false)],
     foreignKeys = [ForeignKey(
-        entity = StateEntity::class,
+        entity = GameEntity::class,
         parentColumns = ["id"],
-        childColumns = ["stateId"],
+        childColumns = ["gameId"],
         onDelete = ForeignKey.CASCADE
     )]
 
 )
 data class ActionEntity(
-    @PrimaryKey
     val id: String,
+    val gameId: String,
     val stateId: String,
     val description: String,
 )

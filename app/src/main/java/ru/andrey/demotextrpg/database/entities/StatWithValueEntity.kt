@@ -9,7 +9,7 @@ const val STAT_WITH_VALUE_TABLE = "stat_with_value_table"
 
 @Entity(
     tableName = STAT_WITH_VALUE_TABLE,
-    primaryKeys = ["parentId", "statId", "valueId"],
+    primaryKeys = ["gameId", "parentId", "statId", "valueId"],
     indices = [Index(value = ["gameId"], unique = false)],
     foreignKeys = [ForeignKey(
         entity = GameEntity::class,

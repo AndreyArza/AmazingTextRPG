@@ -11,17 +11,17 @@ import ru.andrey.demotextrpg.database.entities.LocationEntity
 @Dao
 interface LocationDao {
     @Query("SELECT * FROM $LOCATION_TABLE")
-    fun getAll(): List<LocationEntity>
+    suspend fun getAll(): List<LocationEntity>
 
     @Query("SELECT * FROM $LOCATION_TABLE WHERE id IN (:ids)")
-    fun loadAllByIds(ids: List<String>): List<LocationEntity>
+    suspend fun loadAllByIds(ids: List<String>): List<LocationEntity>
 
     @Query("SELECT * FROM $LOCATION_TABLE WHERE gameId LIKE :id")
-    fun loadAllByGameId(id: String): List<LocationEntity>
+    suspend fun loadAllByGameId(id: String): List<LocationEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(entities: List<LocationEntity>)
+    suspend fun insertAll(entities: List<LocationEntity>)
 
     @Delete
-    fun delete(entities: List<LocationEntity>)
+    suspend fun delete(entities: List<LocationEntity>)
 }

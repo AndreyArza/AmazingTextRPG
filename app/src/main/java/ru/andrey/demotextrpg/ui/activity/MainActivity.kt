@@ -20,13 +20,18 @@ class MainActivity : ComponentActivity() {
         (applicationContext as App).appComponent.inject(this)
 
         lifecycleScope.launch {
-            source.getDirections("", 1).collect { res ->
+            val a = source.getDirections("", 2)
+            a.collect { res ->
                 val a = res.getOrNull()!!
                 Log.d(
                     "AAAAAAAAAAAAAAAAAAAAAAAA",
                     "${a.values.size} ${a.loaded} ${a.total}"
                 )
             }
+            Log.d(
+                "AAAAAAAAAAAAAAAAAAAAAAAA",
+                "FINISH"
+            )
         }
         super.onCreate(savedInstanceState)
         setContent {
