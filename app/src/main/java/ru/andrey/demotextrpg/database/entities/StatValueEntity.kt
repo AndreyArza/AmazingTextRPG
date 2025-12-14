@@ -3,6 +3,7 @@ package ru.andrey.demotextrpg.database.entities
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
+import ru.andrey.demotextrpg.database.custom_types.StatType
 import ru.andrey.demotextrpg.network.model.data.StatTypeData
 
 const val STAT_VALUE_TABLE = "stat_value"
@@ -23,5 +24,5 @@ data class StatValueEntity(
     val gameId: String,
     val statId: String,
     val value: String = "",
-    val type: StatTypeData = StatTypeData.STRING,
+    val type: StatType = StatType.STRING,
 )

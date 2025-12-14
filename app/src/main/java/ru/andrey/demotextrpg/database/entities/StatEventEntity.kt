@@ -3,15 +3,15 @@ package ru.andrey.demotextrpg.database.entities
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
-import androidx.room.PrimaryKey
-import ru.andrey.demotextrpg.network.model.data.StatEventTypeData
+import ru.andrey.demotextrpg.database.custom_types.SideEffectType
+import ru.andrey.demotextrpg.database.custom_types.StatEventType
 
 const val STAT_EVENT_TABLE = "stat_event_table"
 
 
 @Entity(
     tableName = STAT_EVENT_TABLE,
-    indices = [Index(value = ["sideEffectId"], unique = false)],
+    indices = [Index(value = ["actionId"], unique = false)],
     foreignKeys = [ForeignKey(
         entity = GameEntity::class,
         parentColumns = ["id"],
@@ -20,11 +20,10 @@ const val STAT_EVENT_TABLE = "stat_event_table"
     )]
 )
 data class StatEventEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: String,
     val gameId: String,
-    val sideEffectId: String,
+    val actionId: String,
     val statId: String,
     val statValueId: String,
-    val type: StatEventTypeData,
+    val type: StatEventType,
+    val effectType: SideEffectType,
 )

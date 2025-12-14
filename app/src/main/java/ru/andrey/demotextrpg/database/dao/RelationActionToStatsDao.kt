@@ -10,8 +10,8 @@ import ru.andrey.demotextrpg.database.entities.RelationActionToStatsEntity
 
 @Dao
 interface RelationActionToStatsDao {
-    @Query("SELECT * FROM $RELATION_ACTION_TO_STATS_TABLE WHERE actionId in (:ids)")
-    suspend fun loadAllByActionIds(ids: List<String>): List<RelationActionToStatsEntity>
+    @Query("SELECT * FROM $RELATION_ACTION_TO_STATS_TABLE WHERE actionId LIKE :id AND gameId LIKE :gameId")
+    suspend fun loadAllByActionIds(id: String, gameId: String): List<RelationActionToStatsEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(entities: List<RelationActionToStatsEntity>)

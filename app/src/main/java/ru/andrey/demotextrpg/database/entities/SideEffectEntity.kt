@@ -19,8 +19,6 @@ const val SIDE_EFFECT_TABLE = "side_effect_table"
     )]
 )
 data class SideEffectEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: String,
     val gameId: String,
     val actionId: String,
     val type: SideEffectType,

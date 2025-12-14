@@ -22,5 +22,4 @@ data class LocationEntity(
     val gameId: String,
     val defaultStateId: String,
     val description: String,
-    val directionsIds: List<String>,
 )

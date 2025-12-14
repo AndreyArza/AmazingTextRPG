@@ -10,8 +10,8 @@ import ru.andrey.demotextrpg.database.entities.StatValueEntity
 
 @Dao
 interface StatValueDao {
-    @Query("SELECT * FROM $STAT_VALUE_TABLE")
-    suspend fun getAll(): List<StatValueEntity>
+    @Query("SELECT * FROM $STAT_VALUE_TABLE WHERE gameId LIKE :gameId")
+    suspend fun getAllByGameId(gameId: String): List<StatValueEntity>
 
     @Query("SELECT * FROM $STAT_VALUE_TABLE WHERE id IN (:ids)")
     suspend fun loadAllByIds(ids: List<String>): List<StatValueEntity>

@@ -10,8 +10,8 @@ import ru.andrey.demotextrpg.database.entities.SideEffectEntity
 
 @Dao
 interface SideEffectDao {
-    @Query("SELECT * FROM $SIDE_EFFECT_TABLE WHERE actionId in (:ids)")
-    suspend fun loadAllByActionIds(ids: List<String>): List<SideEffectEntity>
+    @Query("SELECT * FROM $SIDE_EFFECT_TABLE WHERE actionId LIKE :id AND gameId LIKE :gameId")
+    suspend fun loadAllByActionId(id: String, gameId: String): List<SideEffectEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(entities: List<SideEffectEntity>)
