@@ -10,17 +10,17 @@ import ru.andrey.demotextrpg.database.entities.DirectionEntity
 
 @Dao
 interface DirectionDao {
-    @Query("SELECT * FROM $DIRECTION_TABLE")
-    suspend fun getAll(): List<DirectionEntity>
+    @Query("SELECT * FROM $DIRECTION_TABLE WHERE gameId LIKE :gameId")
+    suspend fun getAllByGameId(gameId: String): List<DirectionEntity>
 
-    @Query("SELECT * FROM $DIRECTION_TABLE WHERE id IN (:directionId)")
-    suspend fun loadAllByIds(directionId: List<String>): List<DirectionEntity>
+    @Query("SELECT * FROM $DIRECTION_TABLE WHERE id IN (:directionId) AND gameId LIKE :gameId")
+    suspend fun loadAllByIds(directionId: List<String>, gameId: String): List<DirectionEntity>
 
-    @Query("SELECT * FROM $DIRECTION_TABLE WHERE locationId in (:locationIds)")
-    suspend fun loadByLocationId(locationIds: List<String>): List<DirectionEntity>
+    @Query("SELECT * FROM $DIRECTION_TABLE WHERE locationId in (:locationIds) AND gameId LIKE :gameId")
+    suspend fun loadByLocationId(locationIds: List<String>, gameId: String): List<DirectionEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(vararg directions: DirectionEntity)
+    suspend fun insertAll(vararg directions: List<DirectionEntity>)
 
     @Delete
     suspend fun delete(directions: List<DirectionEntity>)

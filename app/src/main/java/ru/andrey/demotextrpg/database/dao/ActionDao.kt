@@ -13,8 +13,8 @@ interface ActionDao {
     @Query("SELECT * FROM $ACTION_TABLE WHERE gameId LIKE :gameId")
     suspend fun getAllByGameId(gameId: String): List<ActionEntity>
 
-    @Query("SELECT * FROM $ACTION_TABLE WHERE id IN (:ids)")
-    suspend fun loadAllByIds(ids: List<String>): List<ActionEntity>
+    @Query("SELECT * FROM $ACTION_TABLE WHERE id IN (:ids) AND gameId LIKE :gameId")
+    suspend fun loadAllByIds(ids: List<String>, gameId: String): List<ActionEntity>
 
     @Query("SELECT * FROM $ACTION_TABLE WHERE stateId LIKE :id AND gameId LIKE :gameId")
     suspend fun loadAllByStateId(id: String, gameId: String): List<ActionEntity>

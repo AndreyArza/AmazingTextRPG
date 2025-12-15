@@ -1,4 +1,4 @@
-package ru.andrey.demotextrpg.database.source.interfaces
+package ru.andrey.demotextrpg.database.source.impementation
 
 import ru.andrey.demotextrpg.database.custom_types.RelationActionToStatsType
 import ru.andrey.demotextrpg.database.custom_types.SideEffectType
@@ -17,8 +17,10 @@ import ru.andrey.demotextrpg.database.model.StatEventLocal
 import ru.andrey.demotextrpg.database.model.StatEventTypeLocal
 import ru.andrey.demotextrpg.database.model.StatWithValueLocal
 import ru.andrey.demotextrpg.database.model.SuccessCheckLocal
+import ru.andrey.demotextrpg.database.source.interfaces.ActionLocalSource
+import javax.inject.Inject
 
-class ActionLocalSourceImpl(
+class ActionLocalSourceImpl @Inject constructor(
     val actionDao: ActionDao,
     val sideEffectDao: SideEffectDao,
     val statEventDao: StatEventDao,
@@ -26,50 +28,21 @@ class ActionLocalSourceImpl(
 
 ) : ActionLocalSource {
     override suspend fun getAllByGameId(gameId: String): List<ActionLocal> {
-        return actionDao.getAllByGameId(gameId).map { entity ->
-            val effects = sideEffectDao.loadAllByActionId(entity.id, gameId)
-            val positiveEvents = statEventDao.loadAllBySideEffect(
-                actionId = entity.id,
-                sideEffectType = SideEffectType.POSITIVE,
-                gameId = gameId
-            )
-            val positiveEffect = effects.first { it.type == SideEffectType.POSITIVE }
-                .toLocal(positiveEvents.map { it.toLocal() })
+        return actionDao.getAllByGameId(gameId).map { it.toLocal() }
+    }
 
-            val negativeEvents = statEventDao.loadAllBySideEffect(
-                actionId = entity.id,
-                sideEffectType = SideEffectType.NEGATIVE,
-                gameId = gameId
-            )
-            val negativeEffect = effects.firstOrNull { it.type == SideEffectType.NEGATIVE }
-                ?.toLocal(negativeEvents.map { it.toLocal() })
-            val stats = relationActionToStatsDao.loadAllByActionIds(entity.id, gameId)
-            val visibilityStats =
-                stats.filter { it.type == RelationActionToStatsType.VISIBILITY_CHECK }
-            val requiredStats =
-                stats.filter { it.type == RelationActionToStatsType.SUCCESS_CHECK_POSITIVE }
-            val negativeStats =
-                stats.filter { it.type == RelationActionToStatsType.SUCCESS_CHECK_NEGATIVE }
-            entity.toLocal(
-                sideEffect = positiveEffect,
-                failSideEffect = negativeEffect ?: positiveEffect,
-                visibilityCheckStatsWithValue = visibilityStats.map {
-                    StatWithValueLocal(
-                        it.statId,
-                        it.valueId
-                    )
-                },
-                successCheck = SuccessCheckLocal(
-                    requiredStats = requiredStats.map { StatWithValueLocal(it.statId, it.valueId) },
-                    unsuccessfulStats = negativeStats.map {
-                        StatWithValueLocal(
-                            it.statId,
-                            it.valueId
-                        )
-                    }
-                )
-            )
-        }
+    override suspend fun getAllByStateId(
+        stateId: String,
+        gameId: String
+    ): List<ActionLocal> {
+        return actionDao.loadAllByStateId(stateId, gameId).map { it.toLocal() }
+    }
+
+    override suspend fun getById(
+        id: String,
+        gameId: String
+    ): ActionLocal {
+        return actionDao.loadAllByIds(listOf(id), gameId).map { it.toLocal() }.first()
     }
 
     override suspend fun insertAllActions(
@@ -84,12 +57,30 @@ class ActionLocalSourceImpl(
                 type = SideEffectType.POSITIVE
             )
         })
+        statEventDao.insertAll(actions.flatMap { action ->
+            action.sideEffect.statEvents.map {
+                it.toEntity(
+                    gameId = gameId,
+                    actionId = action.id,
+                    effectType = SideEffectType.POSITIVE
+                )
+            }
+        })
         sideEffectDao.insertAll(actions.map {
             it.failSideEffect.toEntity(
                 gameId = gameId,
                 actionId = it.id,
                 type = SideEffectType.NEGATIVE
             )
+        })
+        statEventDao.insertAll(actions.flatMap { action ->
+            action.failSideEffect.statEvents.map {
+                it.toEntity(
+                    gameId = gameId,
+                    actionId = action.id,
+                    effectType = SideEffectType.NEGATIVE
+                )
+            }
         })
         actions.forEach { action ->
             relationActionToStatsDao.insertAll(
@@ -140,12 +131,30 @@ class ActionLocalSourceImpl(
                 type = SideEffectType.POSITIVE
             )
         })
+        statEventDao.delete(actions.flatMap { action ->
+            action.sideEffect.statEvents.map {
+                it.toEntity(
+                    gameId = gameId,
+                    actionId = action.id,
+                    effectType = SideEffectType.POSITIVE
+                )
+            }
+        })
         sideEffectDao.delete(actions.map {
             it.failSideEffect.toEntity(
                 gameId = gameId,
                 actionId = it.id,
                 type = SideEffectType.NEGATIVE
             )
+        })
+        statEventDao.delete(actions.flatMap { action ->
+            action.failSideEffect.statEvents.map {
+                it.toEntity(
+                    gameId = gameId,
+                    actionId = action.id,
+                    effectType = SideEffectType.NEGATIVE
+                )
+            }
         })
         actions.forEach { action ->
             relationActionToStatsDao.delete(
@@ -193,20 +202,53 @@ class ActionLocalSourceImpl(
         )
     }
 
-    private fun ActionEntity.toLocal(
-        sideEffect: SideEffectLocal,
-        failSideEffect: SideEffectLocal = sideEffect,
-        visibilityCheckStatsWithValue: List<StatWithValueLocal>,
-        successCheck: SuccessCheckLocal
+    private suspend fun ActionEntity.toLocal(
     ): ActionLocal {
+        val effects = sideEffectDao.loadAllByActionId(id, gameId)
+        val positiveEvents = statEventDao.loadAllBySideEffect(
+            actionId = id,
+            sideEffectType = SideEffectType.POSITIVE,
+            gameId = gameId
+        )
+        val positiveEffect = effects.first { it.type == SideEffectType.POSITIVE }
+            .toLocal(positiveEvents.map { it.toLocal() })
+
+        val negativeEvents = statEventDao.loadAllBySideEffect(
+            actionId = id,
+            sideEffectType = SideEffectType.NEGATIVE,
+            gameId = gameId
+        )
+        val negativeEffect = effects.firstOrNull { it.type == SideEffectType.NEGATIVE }
+            ?.toLocal(negativeEvents.map { it.toLocal() })
+        val stats = relationActionToStatsDao.loadAllByActionIds(id, gameId)
+        val visibilityStats =
+            stats.filter { it.type == RelationActionToStatsType.VISIBILITY_CHECK }
+        val requiredStats =
+            stats.filter { it.type == RelationActionToStatsType.SUCCESS_CHECK_POSITIVE }
+        val negativeStats =
+            stats.filter { it.type == RelationActionToStatsType.SUCCESS_CHECK_NEGATIVE }
+
         return ActionLocal(
             id = id,
             parentStateId = stateId,
             description = description,
-            sideEffect = sideEffect,
-            failSideEffect = failSideEffect,
-            visibilityCheckStatsWithValue = visibilityCheckStatsWithValue,
-            successCheck = successCheck
+            sideEffect = positiveEffect,
+            failSideEffect = negativeEffect ?: positiveEffect,
+            visibilityCheckStatsWithValue = visibilityStats.map {
+                StatWithValueLocal(
+                    it.statId,
+                    it.valueId
+                )
+            },
+            successCheck = SuccessCheckLocal(
+                requiredStats = requiredStats.map { StatWithValueLocal(it.statId, it.valueId) },
+                unsuccessfulStats = negativeStats.map {
+                    StatWithValueLocal(
+                        it.statId,
+                        it.valueId
+                    )
+                }
+            )
         )
     }
 

@@ -4,11 +4,12 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import ru.andrey.demotextrpg.database.custom_types.RelationActionToStatsType
 
-const val RELATION_ACTION_TO_STATS_TABLE = "relation_action_to_stats_table"
+
+const val RELATION_DIRECTION_TO_STATS_TABLE = "relation_direction_to_stats_table"
 
 
 @Entity(
-    tableName = RELATION_ACTION_TO_STATS_TABLE,
+    tableName = RELATION_DIRECTION_TO_STATS_TABLE,
     foreignKeys = [ForeignKey(
         entity = GameEntity::class,
         parentColumns = ["id"],
@@ -16,10 +17,9 @@ const val RELATION_ACTION_TO_STATS_TABLE = "relation_action_to_stats_table"
         onDelete = ForeignKey.CASCADE
     )]
 )
-data class RelationActionToStatsEntity(
+data class RelationDirectionToStatsEntity(
     val gameId: String,
-    val actionId: String,
+    val directionId: String,
     val statId: String,
     val valueId: String,
-    val type: RelationActionToStatsType
 )
