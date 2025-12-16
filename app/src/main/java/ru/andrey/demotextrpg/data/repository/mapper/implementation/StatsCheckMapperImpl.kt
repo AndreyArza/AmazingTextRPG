@@ -1,8 +1,8 @@
 package ru.andrey.demotextrpg.data.repository.mapper.implementation
 
 import ru.andrey.demotextrpg.data.repository.mapper.interfaces.StatsCheckMapper
-import ru.andrey.demotextrpg.data.repository.model.Stat
-import ru.andrey.demotextrpg.data.repository.model.StatValue
+import ru.andrey.demotextrpg.domain.model.Stat
+import ru.andrey.demotextrpg.domain.model.StatValue
 import ru.andrey.demotextrpg.network.model.data.StatWithValueData
 
 class StatsCheckMapperImpl : StatsCheckMapper {

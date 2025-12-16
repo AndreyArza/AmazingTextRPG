@@ -2,11 +2,8 @@ package ru.andrey.demotextrpg.database.entities
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import ru.andrey.demotextrpg.database.custom_types.RelationActionToStatsType
-
 
 const val RELATION_DIRECTION_TO_STATS_TABLE = "relation_direction_to_stats_table"
-
 
 @Entity(
     tableName = RELATION_DIRECTION_TO_STATS_TABLE,

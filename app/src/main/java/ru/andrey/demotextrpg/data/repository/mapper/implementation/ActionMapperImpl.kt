@@ -3,7 +3,7 @@ package ru.andrey.demotextrpg.data.repository.mapper.implementation
 import ru.andrey.demotextrpg.data.repository.mapper.interfaces.ActionMapper
 import ru.andrey.demotextrpg.data.repository.mapper.interfaces.SideEffectMapper
 import ru.andrey.demotextrpg.data.repository.mapper.interfaces.StatsCheckMapper
-import ru.andrey.demotextrpg.data.repository.model.Action
+import ru.andrey.demotextrpg.domain.model.Action
 import ru.andrey.demotextrpg.network.model.data.ActionData
 import ru.andrey.demotextrpg.network.model.data.ModelData
 

@@ -36,10 +36,12 @@ class DirectionLocalSourceImpl @Inject constructor(
         locationId: String,
         directions: List<DirectionLocal>
     ) {
-        directionDao.insertAll(directions.map { it.toEntity(
-            gameId = gameId,
-            locationId = locationId
-        ) })
+        directionDao.insertAll(directions.map {
+            it.toEntity(
+                gameId = gameId,
+                locationId = locationId
+            )
+        })
         directions.forEach { direction ->
             relationDirectionToStatsDao.insertAll(
                 direction.visibilityRequiredStats.map { statWithValueLocal ->
@@ -59,10 +61,12 @@ class DirectionLocalSourceImpl @Inject constructor(
         locationId: String,
         directions: List<DirectionLocal>
     ) {
-        directionDao.delete(directions.map { it.toEntity(
-            gameId = gameId,
-            locationId = locationId
-        ) })
+        directionDao.delete(directions.map {
+            it.toEntity(
+                gameId = gameId,
+                locationId = locationId
+            )
+        })
         directions.forEach { direction ->
             relationDirectionToStatsDao.delete(
                 direction.visibilityRequiredStats.map { statWithValueLocal ->

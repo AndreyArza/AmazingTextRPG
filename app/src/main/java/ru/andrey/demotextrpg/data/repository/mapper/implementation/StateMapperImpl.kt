@@ -2,7 +2,7 @@ package ru.andrey.demotextrpg.data.repository.mapper.implementation
 
 import ru.andrey.demotextrpg.data.repository.mapper.interfaces.ActionMapper
 import ru.andrey.demotextrpg.data.repository.mapper.interfaces.StateMapper
-import ru.andrey.demotextrpg.data.repository.model.State
+import ru.andrey.demotextrpg.domain.model.State
 import ru.andrey.demotextrpg.network.model.data.ActionData
 import ru.andrey.demotextrpg.network.model.data.StateData
 

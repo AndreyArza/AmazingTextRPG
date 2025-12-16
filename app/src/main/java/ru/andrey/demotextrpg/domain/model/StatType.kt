@@ -1,4 +1,4 @@
-package ru.andrey.demotextrpg.data.repository.model
+package ru.andrey.demotextrpg.domain.model
 
 enum class StatType {
     STRING,

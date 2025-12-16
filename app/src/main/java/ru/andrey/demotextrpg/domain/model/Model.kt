@@ -1,4 +1,4 @@
-package ru.andrey.demotextrpg.data.repository.model
+package ru.andrey.demotextrpg.domain.model
 
 data class Model(
     val locationId: String,

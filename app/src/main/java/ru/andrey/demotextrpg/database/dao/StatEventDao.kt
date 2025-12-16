@@ -11,8 +11,10 @@ import ru.andrey.demotextrpg.database.entities.StatEventEntity
 
 @Dao
 interface StatEventDao {
-    @Query("SELECT * FROM $STAT_EVENT_TABLE WHERE effectType LIKE :sideEffectType " +
-            "AND gameId LIKE :gameId AND actionId LIKE :actionId")
+    @Query(
+        "SELECT * FROM $STAT_EVENT_TABLE WHERE effectType LIKE :sideEffectType " +
+                "AND gameId LIKE :gameId AND actionId LIKE :actionId"
+    )
     suspend fun loadAllBySideEffect(
         actionId: String,
         sideEffectType: SideEffectType,

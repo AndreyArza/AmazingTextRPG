@@ -1,6 +1,6 @@
 package ru.andrey.demotextrpg.data.repository.mapper.interfaces
 
-import ru.andrey.demotextrpg.data.repository.model.Model
+import ru.andrey.demotextrpg.domain.model.Model
 import ru.andrey.demotextrpg.network.model.data.ModelData
 import ru.andrey.demotextrpg.network.model.data.StatData
 import ru.andrey.demotextrpg.network.model.data.StatValueData

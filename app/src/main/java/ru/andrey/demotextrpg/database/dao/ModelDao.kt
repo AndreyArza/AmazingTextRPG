@@ -12,9 +12,6 @@ import ru.andrey.demotextrpg.database.entities.ModelEntity
 
 @Dao
 interface ModelDao {
-    @Query("SELECT * FROM $MODEL_TABLE")
-    suspend fun getAll(): List<ModelEntity>
-
     @Query("SELECT * FROM $MODEL_TABLE WHERE gameId LIKE :id")
     suspend fun loadByGameId(id: String): Flow<ModelEntity>
 

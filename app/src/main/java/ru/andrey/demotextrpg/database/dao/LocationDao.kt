@@ -11,7 +11,7 @@ import ru.andrey.demotextrpg.database.entities.LocationEntity
 @Dao
 interface LocationDao {
     @Query("SELECT * FROM $LOCATION_TABLE WHERE id IN (:ids) AND  gameId LIKE :gameId")
-    suspend fun loadAllByIds(gameId: String,ids: List<String>): List<LocationEntity>
+    suspend fun loadAllByIds(gameId: String, ids: List<String>): List<LocationEntity>
 
     @Query("SELECT * FROM $LOCATION_TABLE WHERE gameId LIKE :id")
     suspend fun loadAllByGameId(id: String): List<LocationEntity>

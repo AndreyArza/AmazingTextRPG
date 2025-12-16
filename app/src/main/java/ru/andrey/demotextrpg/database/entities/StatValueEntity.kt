@@ -4,7 +4,6 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import ru.andrey.demotextrpg.database.custom_types.StatType
-import ru.andrey.demotextrpg.network.model.data.StatTypeData
 
 const val STAT_VALUE_TABLE = "stat_value"
 

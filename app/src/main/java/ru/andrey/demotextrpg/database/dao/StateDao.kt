@@ -14,7 +14,7 @@ interface StateDao {
     suspend fun getAllByGameId(gameId: String): List<StateEntity>
 
     @Query("SELECT * FROM $STATE_TABLE WHERE id IN (:ids) AND gameId LIKE :gameId")
-    suspend fun loadAllByIds(ids: List<String>,gameId: String): List<StateEntity>
+    suspend fun loadAllByIds(ids: List<String>, gameId: String): List<StateEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(entities: List<StateEntity>)

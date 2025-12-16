@@ -2,15 +2,11 @@ package ru.andrey.demotextrpg.database.entities
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import androidx.room.Index
 
-const val STAT_WITH_VALUE_TABLE = "stat_with_value_table"
-
+const val RELATION_MODEL_TO_STATS_TABLE = "relation_model_to_stats_table"
 
 @Entity(
-    tableName = STAT_WITH_VALUE_TABLE,
-    primaryKeys = ["gameId", "parentId", "statId", "valueId"],
-    indices = [Index(value = ["gameId"], unique = false)],
+    tableName = RELATION_MODEL_TO_STATS_TABLE,
     foreignKeys = [ForeignKey(
         entity = GameEntity::class,
         parentColumns = ["id"],
@@ -18,9 +14,8 @@ const val STAT_WITH_VALUE_TABLE = "stat_with_value_table"
         onDelete = ForeignKey.CASCADE
     )]
 )
-data class StatWithValueEntity(
+data class RelationModelToStatsEntity(
     val gameId: String,
-    val parentId: String,
     val statId: String,
     val valueId: String,
 )

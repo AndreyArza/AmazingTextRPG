@@ -1,9 +1,9 @@
 package ru.andrey.demotextrpg.data.repository.mapper.implementation
 
 import ru.andrey.demotextrpg.data.repository.mapper.interfaces.SideEffectMapper
-import ru.andrey.demotextrpg.data.repository.model.Model
-import ru.andrey.demotextrpg.data.repository.model.Stat
-import ru.andrey.demotextrpg.data.repository.model.StatValue
+import ru.andrey.demotextrpg.domain.model.Model
+import ru.andrey.demotextrpg.domain.model.Stat
+import ru.andrey.demotextrpg.domain.model.StatValue
 import ru.andrey.demotextrpg.network.model.data.SideEffectData
 import ru.andrey.demotextrpg.network.model.data.StatEventTypeData
 

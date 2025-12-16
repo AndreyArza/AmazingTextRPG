@@ -1,9 +1,11 @@
 package ru.andrey.demotextrpg.data.repository.implementation
 
-import ru.andrey.demotextrpg.logic.interfaces.Repository
+import ru.andrey.demotextrpg.domain.model.Game
+import ru.andrey.demotextrpg.domain.model.Model
+import ru.andrey.demotextrpg.domain.repository.Repository
 
 class RepositoryImpl : Repository {
-//    private val context get() = App.Companion.appContext
+    //    private val context get() = App.Companion.appContext
 ////    private lateinit var model: Model
 ////    private const val KEY_GAME = "GAME"
 //
@@ -49,5 +51,16 @@ class RepositoryImpl : Repository {
 //        return getRawGame().transform()
 //    }
 //
+    override fun getModel(): Model {
+        TODO("Not yet implemented")
+    }
+
+    override fun setModel(model: Model) {
+        TODO("Not yet implemented")
+    }
+
+    override fun getGame(): Game {
+        TODO("Not yet implemented")
+    }
 
 }

@@ -45,6 +45,7 @@ class LocationLocalSourceImpl @Inject constructor(
             directionsIds = directions
         )
     }
+
     private fun LocationLocal.toEntity(gameId: String): LocationEntity {
         return LocationEntity(
             id = id,

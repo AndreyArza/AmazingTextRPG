@@ -1,8 +1,8 @@
 package ru.andrey.demotextrpg.data.repository.mapper.implementation
 
 import ru.andrey.demotextrpg.data.repository.mapper.interfaces.GameMapper
-import ru.andrey.demotextrpg.data.repository.model.Game
-import ru.andrey.demotextrpg.data.repository.model.TabInfo
+import ru.andrey.demotextrpg.domain.model.Game
+import ru.andrey.demotextrpg.domain.model.TabInfo
 import ru.andrey.demotextrpg.network.model.data.GameData
 import ru.andrey.demotextrpg.network.model.data.TabData
 

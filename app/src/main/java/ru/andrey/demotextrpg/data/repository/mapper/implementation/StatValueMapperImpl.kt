@@ -1,8 +1,8 @@
 package ru.andrey.demotextrpg.data.repository.mapper.implementation
 
 import ru.andrey.demotextrpg.data.repository.mapper.interfaces.StatValueMapper
-import ru.andrey.demotextrpg.data.repository.model.StatType
-import ru.andrey.demotextrpg.data.repository.model.StatValue
+import ru.andrey.demotextrpg.domain.model.StatType
+import ru.andrey.demotextrpg.domain.model.StatValue
 import ru.andrey.demotextrpg.network.model.data.StatValueData
 
 class StatValueMapperImpl : StatValueMapper {
