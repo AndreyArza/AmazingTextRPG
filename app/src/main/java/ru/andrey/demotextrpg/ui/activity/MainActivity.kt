@@ -4,17 +4,29 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material3.Text
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.Modifier
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import ru.andrey.demotextrpg.app.App
 import ru.andrey.demotextrpg.network.source.interfaces.NetworkSource
+import ru.andrey.demotextrpg.ui.activity.di.DaggerViewModelFactory
+import ru.andrey.demotextrpg.ui.navigation.NavGraph
 import ru.andrey.demotextrpg.ui.theme.WitcherIVTheme
 import javax.inject.Inject
 
+val LocalViewModelFactory = staticCompositionLocalOf<ViewModelProvider.Factory> {
+    throw IllegalStateException("No factory provided")
+}
 class MainActivity : ComponentActivity() {
     @Inject
     lateinit var source: NetworkSource
+
+    @Inject
+    lateinit var commonFactory: DaggerViewModelFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (applicationContext as App).appComponent.inject(this)
@@ -35,27 +47,14 @@ class MainActivity : ComponentActivity() {
         }
         super.onCreate(savedInstanceState)
         setContent {
-            WitcherIVTheme {
-                Text("))")
-//                Surface(
-//                    modifier = Modifier.fillMaxSize(),
-//                    color = MaterialTheme.colorScheme.background
-//                ) {
-//                    val navController = rememberNavController()
-//                    NavHost(navController = navController, startDestination = Screen.Splash.route) {
-//                        composable(Screen.Splash.route) {
-//                            Splash(
-//                                createExternalRouter { screen, params ->
-//                                    navController.navigate(screen, params)
-//                                },
-//                                lifecycleScope
-//                            )
-//                        }
-//                        composable(Screen.Game.route) {
-//                            Game()
-//                        }
-//                    }
-//                }
+            CompositionLocalProvider(LocalViewModelFactory provides commonFactory) {
+                WitcherIVTheme {
+                    val navController = rememberNavController()
+                    NavGraph(
+                        navController = navController,
+                        modifier = Modifier,
+                    )
+                }
             }
         }
     }

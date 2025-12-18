@@ -6,6 +6,7 @@ import dagger.Component
 import ru.andrey.demotextrpg.database.di.DatabaseModule
 import ru.andrey.demotextrpg.network.di.NetworkModule
 import ru.andrey.demotextrpg.ui.activity.MainActivity
+import ru.andrey.demotextrpg.ui.activity.di.UiModule
 import javax.inject.Singleton
 
 @Singleton
@@ -13,7 +14,8 @@ import javax.inject.Singleton
     modules = [
         AppModule::class,
         NetworkModule::class,
-        DatabaseModule::class
+        DatabaseModule::class,
+        UiModule::class
     ]
 )
 interface ApplicationComponent {

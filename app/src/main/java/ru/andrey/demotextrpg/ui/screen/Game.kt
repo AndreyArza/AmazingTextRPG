@@ -15,15 +15,12 @@ import ru.andrey.demotextrpg.ui.model.Mode
 import ru.andrey.demotextrpg.ui.utils.Text
 import ru.andrey.demotextrpg.ui.viewmodel.GameViewModel
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
-@ExperimentalAnimationApi
 @Composable
 fun Game(
     viewModel: GameViewModel = viewModel(),
 ) {
     val navController = rememberNavController()
-    val bottomItems = Mode.values()
+    val bottomItems = Mode.entries.toTypedArray()
 
     Scaffold(
         bottomBar = {
