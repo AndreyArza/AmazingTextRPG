@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WitcherIV</string>
+    <string name="app_name">Text RPG</string>
     <string name="splash">splash</string>
     <string name="game">game</string>
     <string name="main">Главная</string>
